@@ -7,10 +7,16 @@ let datosAgentes=[];
 // ================= INIT =================
 async function iniciarDashboard(){
 
-    await cargarZonas();
-    await cargarAgentes();
+    try{
+        await Promise.all([
+            cargarZonas(),
+            cargarAgentes()
+        ]);
+    }catch(e){
+        console.log("Error cargando datos:", e);
+    }
 
-    guardarFechaActualizacion(); // 🔥 NUEVO
+    guardarFechaActualizacion();
     mostrarFecha();
 }
 
@@ -20,12 +26,15 @@ async function cargarZonas(){
         const res=await fetch(apiZonas);
         const datos=await res.json();
 
-        datosZonas=datos;
+        datosZonas=datos||[];
 
         llenarSelectZonas();
         mostrarZonas(datosZonas);
 
-    }catch(e){console.log(e);}
+    }catch(e){
+        console.log("Error zonas:", e);
+        datosZonas=[];
+    }
 }
 
 async function cargarAgentes(){
@@ -38,7 +47,10 @@ async function cargarAgentes(){
         llenarSelectAgentes();
         mostrarAgentes(datosAgentes);
 
-    }catch(e){console.log(e);}
+    }catch(e){
+        console.log("Error agentes:", e);
+        datosAgentes=[];
+    }
 }
 
 // ================= SELECTS =================
