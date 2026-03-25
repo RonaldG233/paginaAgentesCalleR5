@@ -1,0 +1,43 @@
+@import url(estilos.css);
+/* ================= VARIABLES ================= */
+:root {
+  --color-fondo-principal: #ffffeb;   /* Fondo principal (.holaa) */
+  --color-marron: #E43636;            /* Títulos, etiquetas, detalles */
+  --color-marron-oscuro: #5e4c3b;     /* Textos secundarios */
+  --color-beige: #E2DDB4;             /* Fondos inputs, botones claros */
+  --color-acento: #C7A589;            /* Bordes, botones destacados */
+  --color-acento-hover: #b37c52;      /* Hover de botones */
+  --color-eliminar: crimson;          /* Botón eliminar carrito */
+  --color-eliminar-hover: darkred;    /* Hover botón eliminar */
+  --color-error: #ff4d4d;             /* Texto de error */
+  --color-blanco: #F6EFD2;            /* Tarjetas y fondos blancos */
+  --color-texto-secundario: #e0e0e0;  /* Descripciones */
+    --color-dorado: #C7A589;
+  --color-dorado-hover: #b37c52;
+  --color-rojo: red;
+  --color-blanco: #F6EFD2;
+    --color-gris-borde: #ddd;
+  --color-gris-hover: #f0f0f0;
+  --color-azul: #3498db;
+  --color-azul-hover: #2980b9;
+  --color-rojo-eliminar: #e74c3c;
+  --color-rojo-hover: #c0392b;
+    --color-amarillo-suave: #fafad4;
+  --color-gris-claro: #efefef;
+    --color-gris-borde: #ccc;
+  --color-rojo-fondo: #ffe6e6;
+  --color-marron-oscuro: #5c3c26;
+
+
+  /*COLOREEEES RECIENTES AGREGADOSSSS*/
+
+  
+}
+
+/* ====== RESETEO GENERAL ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

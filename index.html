@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventas - Dashboard</title>
+<link rel="stylesheet" href="variables.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="content_primer_pagina">
+
+<div class="titulo_primer_pagina">VENTAS</div>
+
+<div class="titulo_logo">
+<img src="LOGOR5.jpg" class="titulo_sayayin">
+</div>
+
+<div class="nombreZonaDistrito">
+<div class="nombreDistrito" id="fechaHoy"></div>
+</div>
+
+</header>
+
+
+<!-- ================= ZONAS ================= -->
+
+<section class="main_container">
+
+<div class="sidebar_filtros">
+
+<div class="filtro_primer_pagina">
+
+<p>ZONA:</p>
+
+<select id="selectZona" class="select_filtro">
+<option value="">TODAS LAS ZONAS</option>
+</select>
+
+</div>
+
+</div>
+
+
+<div class="dashboard_content">
+
+<div class="tablaDistritos full-width">
+
+<table id="tablaZonas">
+
+<thead>
+
+<tr>
+<th>ZONA</th>
+<th>DISTRITO</th>
+<th>METAS</th>
+<th>INSTALADAS</th>
+<th>PROYECCION</th>
+<th>CUMPLIMIENTO</th>
+<th>DEBERIA LLEVAR</th>
+<th>DIFERENCIA</th>
+</tr>
+
+</thead>
+
+<tbody id="bodyZonas"></tbody>
+
+</table>
+
+</div>
+</div>
+
+</section>
+
+
+<!-- ================= AGENTES ================= -->
+
+<section class="main_container">
+
+<div class="sidebar_filtros">
+
+<div class="filtro_primer_pagina">
+
+<p>AGENTE:</p>
+
+<select id="selectAgente" class="select_filtro">
+<option value="">TODOS LOS AGENTES</option>
+</select>
+
+</div>
+
+</div>
+
+
+<div class="dashboard_content">
+
+<div class="tablaDistritos full-width">
+
+<table id="tablaAgentes">
+
+<thead>
+
+<tr>
+<th>AGENTE</th>
+<th>ZONA</th>
+<th>DISTRITO</th>
+<th>METAS</th>
+<th>INSTALADAS</th>
+<th>PROYECCION</th>
+<th>CUMPLIMIENTO</th>
+<th>DEBERIA LLEVAR</th>
+<th>DIFERENCIA</th>
+</tr>
+
+</thead>
+
+<tbody id="bodyAgentes"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

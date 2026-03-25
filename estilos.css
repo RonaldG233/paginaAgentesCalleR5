@@ -1,0 +1,490 @@
+.ventana {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--color-beige); /* antes #F5F5DC */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ==============================
+   TARJETA DE REGISTRO
+============================== */
+.ventana_registro {
+  background-color: var(--color-blanco); /* antes #fff */
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(82, 82, 82, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  animation: aparecer 0.4s ease-in-out;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================
+   LOGO / TÍTULO
+============================== */
+.titulo_registro {
+  padding: 10px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  background: var(--color-blanco);
+}
+
+.texto_titulo {
+  width: 200px;
+  max-width: 40%;
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.texto_titulo:hover {
+  transform: scale(1.15);
+}
+
+/* ==============================
+   FORMULARIO
+============================== */
+.campos_registro {
+  width: 100%;
+  background-color: var(--color-marron); /* antes #8B5E3C */
+  padding: 35px 25px 15px 25px;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.formulario1 {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ==============================
+   CAMPOS DE ENTRADA
+============================== */
+.grupo_campo {
+  width: 100%;
+}
+
+.input,
+.select_content {
+  width: 100%;
+  background-color: var(--color-blanco); /* antes #fff */
+  padding: 12px 30px;
+  border-radius: 12px;
+  border: 1px solid var(--color-gris-borde); /* antes #ccc */
+  outline: none;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+.select_content:focus {
+  border-color: var(--color-marron); /* antes #8B5E3C */
+  box-shadow: 0 0 6px rgba(139, 94, 60, 0.6);
+}
+
+/* Error */
+.border--red {
+  border: 2px solid var(--color-rojo) !important; /* antes red */
+  background-color: var(--color-rojo-fondo); /* antes #ffe6e6 */
+  color: var(--color-rojo);
+}
+
+/* Mensaje de error */
+span {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  text-align: left;
+  color: var(--color-blanco);
+  font-style: italic;
+}
+
+/* ==============================
+   BOTÓN Y ENLACES
+============================== */
+.contenedor_boton {
+  width: 100%;
+  padding: 25px 0;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.boton_registrarse {
+  background-color: var(--color-beige); /* antes #F5F5DC */
+  color: var(--color-marron); /* antes #8B5E3C */
+  padding: 14px 50px;
+  border-radius: 12px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.boton_registrarse:hover {
+  background-color: var(--color-marron-oscuro); /* antes #5c3c26 */
+  transform: translateY(-3px);
+}
+
+.cambio-pagina {
+  color: var(--color-beige); /* antes #F5F5DC */
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cambio-pagina:hover {
+  text-decoration: underline;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 480px) {
+  .ventana_registro {
+    max-width: 95%;
+  }
+  .boton_registrarse {
+    width: 90%;
+  }
+}
+
+
+/*PGINA PRINCIPAL*/
+/* Reseteo básico para limpiar márgenes del navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pagina-principal {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fcfcfc; /* Fondo neutro para resaltar el rojo */
+}
+
+/* TÍTULO Y LOGO */
+.titulo-pagina_principal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px; /* Un poco más de aire arriba */
+    margin-bottom: 60px;
+    gap: 15px;
+}
+
+.texto_titulooo {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 45px; /* Un poco más grande para imponer presencia */
+    color: #333;
+    letter-spacing: 2px;
+}
+
+.titulo_imagen img {
+    max-width: 180px; /* Ajusta según el tamaño de tu logo */
+    height: auto;
+}
+
+/* CONTENEDOR DE CUADROS */
+.contenidooo {
+    display: flex;
+    flex-wrap: wrap; /* Para que si hay muchos, bajen a la siguiente línea */
+    flex-direction: row;
+    width: 90%;
+    max-width: 1000px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px; /* Espacio uniforme entre cuadros */
+}
+
+/* Estilo de los links para que no parezcan links */
+.contenidooo a {
+    text-decoration: none; 
+    color: inherit;
+}
+
+/* Contenedor principal del item */
+.contenedor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.cuadros {
+    width: 200px;
+    height: 200px;
+    background-color: #E43636;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #E2DDB4;
+    position: relative; /* Necesario para posicionar la imagen dentro */
+    overflow: hidden;   /* Esconde la imagen cuando no hay hover */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Estilo de la imagen escondida */
+.imagen-hover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.2); /* Empieza un poco más grande */
+    transition: all 0.4s ease;
+}
+
+/* El número o texto central original */
+.numero-centro {
+    transition: opacity 0.3s ease;
+}
+
+/* El nombre que aparece debajo */
+.nombre-debajo {
+    margin-top: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #333;
+    opacity: 0; /* Escondido al principio */
+    transform: translateY(-10px); /* Un poco arriba */
+    transition: all 0.4s ease;
+}
+
+/* --- EFECTO HOVER --- */
+
+/* 1. Elevamos todo el conjunto */
+.enlace-cuadro:hover .contenedor-item {
+    transform: translateY(-10px);
+}
+
+/* 2. Mostramos la imagen y quitamos el fondo rojo */
+.enlace-cuadro:hover .cuadros {
+    background-color: #000; /* Fondo oscuro por si la imagen carga lento */
+}
+
+.enlace-cuadro:hover .imagen-hover {
+    opacity: 1;
+    transform: scale(1); /* La imagen se ajusta al cuadro */
+}
+
+/* 3. Escondemos el número central */
+.enlace-cuadro:hover .numero-centro {
+    opacity: 0;
+}
+
+/* 4. Desplazamos y mostramos el nombre debajo */
+.enlace-cuadro:hover .nombre-debajo {
+    opacity: 1;
+    transform: translateY(5px); /* Baja a su posición final */
+}
+
+/* Responsive: Para celulares */
+@media (max-width: 600px) {
+    .contenidooo {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .texto_titulooo {
+        font-size: 30px;
+    }
+}
+
+/*PAGINA VENTAAS*/
+/* Reset básico para que todo se vea limpio */
+body{
+background:#fcfcfc;
+padding:20px;
+overflow-x:hidden;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ================= HEADER ================= */
+
+.content_primer_pagina{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:25px;
+gap: -40px;
+}
+
+.titulo_primer_pagina{
+background:#E43636;
+color:#E2DDB4;
+padding:12px 120px;
+font-size:26px;
+font-weight:bold;
+border-radius:0 30px 30px 0;
+}
+
+.titulo_logo{
+display:flex;
+justify-content:center;
+}
+
+.titulo_sayayin{
+width:80px;
+}
+
+.nombreZonaDistrito{
+background:#E2DDB4;
+padding:10px 35px;
+border-radius:12px;
+font-weight:bold;
+}
+
+/* ================= LAYOUT ================= */
+
+.main_container{
+display:flex;
+gap:20px;
+margin-bottom:40px;
+}
+
+.sidebar_filtros{
+width:260px;
+}
+
+.dashboard_content{
+flex:1;
+min-width:0;
+}
+
+/* ================= FILTROS ================= */
+
+.filtro_primer_pagina{
+background:#E2DDB4;
+padding:20px;
+border-radius:12px;
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.select_filtro{
+background:#E43636;
+color:#fff;
+border:none;
+padding:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* ================= TABLA ================= */
+
+.tablaDistritos{
+background:#E2DDB4;
+padding:20px;
+border-radius:15px;
+overflow-x:auto;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+#tablaZonas,
+#tablaAgentes{
+width:100%;
+table-layout:fixed;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+font-size:12px;
+}
+
+/* HEADER TABLA */
+
+#tablaZonas thead,
+#tablaAgentes thead{
+background:#E43636;
+color:#F6EFD2;
+text-transform:uppercase;
+}
+
+#tablaZonas th,
+#tablaAgentes th{
+padding:8px;
+font-size:11px;
+}
+
+/* CELDAS */
+
+#tablaZonas td,
+#tablaAgentes td{
+padding:6px;
+text-align:center;
+border-bottom:1px solid #eee;
+max-width:80px;
+word-break:break-word;
+}
+
+/* ZEBRA */
+
+.grupoA{
+background:white;
+}
+
+.grupoB{
+background:#F6EFD2;
+}
+
+/* HOVER */
+
+#tablaZonas tbody tr:hover,
+#tablaAgentes tbody tr:hover{
+background:#ffdede;
+transition:0.2s;
+}
+
+/* ================= COLORES CUMPLIMIENTO ================= */
+
+.cumplimiento_bajo{
+background:#ff4d4d;
+color:white;
+font-weight:bold;
+}
+
+.cumplimiento_medio{
+background:#ffd633;
+font-weight:bold;
+}
+
+.cumplimiento_alto{
+background:#28a745;
+color:white;
+font-weight:bold;
+}
+
+/* ================= SCROLL TABLA ================= */
+
+.tablaDistritos::-webkit-scrollbar{
+height:8px;
+}
+
+.tablaDistritos::-webkit-scrollbar-thumb{
+background:#E43636;
+border-radius:10px;
+}
