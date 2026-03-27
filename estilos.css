@@ -437,10 +437,11 @@ font-size:11px;
 padding:6px;
 text-align:center;
 border-bottom:1px solid #eee;
-max-width:80px;
-word-break:break-word;
+white-space: nowrap;        /* 🔥 NO rompe línea */
+overflow: hidden;
+text-overflow: ellipsis;    /* 🔥 pone "..." si es largo */
+min-width:90px;
 }
-
 /* ZEBRA */
 
 .grupoA{
