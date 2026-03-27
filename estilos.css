@@ -540,12 +540,12 @@ border-radius:10px;
 
     .titulo_primer_pagina{
         padding:10px 40px; /* 🔥 menos ancho */
-        font-size:18px;
+        font-size:16px;
     }
 
     .nombreZonaDistrito{
         padding:8px 20px;
-        font-size:12px;
+        font-size:10px;
     }
 
 }
@@ -553,12 +553,12 @@ border-radius:10px;
 
     #tablaZonas,
     #tablaAgentes{
-        font-size:10px; /* 🔥 más compacto */
+        font-size:8px; /* 🔥 más compacto */
     }
 
     #tablaZonas th,
     #tablaAgentes th{
-        font-size:9px;
+        font-size:7px;
         padding:6px;
     }
 
