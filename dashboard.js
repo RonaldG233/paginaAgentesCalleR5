@@ -132,7 +132,36 @@ function mostrarZonas(datos){
     const body=document.getElementById("bodyZonas");
     body.innerHTML="";
 
+    const totales = calcularTotalesPorZona(datos);
+
+    let zonaActual = "";
+
     datos.forEach((fila,index)=>{
+
+        // 🔥 SI CAMBIA DE ZONA → INSERTA TOTAL ANTES
+        if(zonaActual !== "" && zonaActual !== fila.ZONA){
+
+            const total = totales[zonaActual];
+
+            const trTotal = document.createElement("tr");
+            trTotal.style.background = "#E43636";
+            trTotal.style.color = "#fff";
+            trTotal.style.fontWeight = "bold";
+
+            trTotal.innerHTML = `
+                <td colspan="3">TOTAL ${zonaActual}</td>
+                <td>${total.metas}</td>
+                <td>${total.instaladas}</td>
+                <td>${total.proyeccion}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>${total.diferencia}</td>
+            `;
+
+            body.appendChild(trTotal);
+        }
+
+        zonaActual = fila.ZONA;
 
         const clase=index%2===0?"grupoA":"grupoB";
 
@@ -143,7 +172,7 @@ function mostrarZonas(datos){
         let porcentaje=porcentajeSeguro(fila["CUMPLIMIENTO INSTALADAS"]);
 
         tr1.innerHTML=`
-        <td  style="font-weight:bold; class="tipo instaladas">INSTALADAS</td>
+        <td class="negrilla">INSTALADAS</td>
         <td>${limpiar(fila.ZONA)}</td>
         <td>${limpiar(fila.DISTRITO)}</td>
         <td>${limpiar(fila["METAS INSTALADAS"])}</td>
@@ -163,8 +192,8 @@ function mostrarZonas(datos){
         let porcentajeD=porcentajeSeguro(fila["CUMPLIMIENTO DIGITADAS"]);
 
         tr2.innerHTML=`
-        <td style="font-weight:bold; class="tipo digitadas">DIGITADAS</td>
-        <td ></td>
+        <td class="negrilla">DIGITADAS</td>
+        <td></td>
         <td></td>
         <td>${limpiar(fila["METAS DIGITADAS"])}</td>
         <td class="negrilla">${limpiar(fila.DIGITADAS)}</td>
@@ -177,6 +206,28 @@ function mostrarZonas(datos){
         body.appendChild(tr2);
 
     });
+
+    // 🔥 ÚLTIMO TOTAL (IMPORTANTE)
+    if(zonaActual){
+        const total = totales[zonaActual];
+
+        const trTotal = document.createElement("tr");
+        trTotal.style.background = "#E43636";
+        trTotal.style.color = "#fff";
+        trTotal.style.fontWeight = "bold";
+
+        trTotal.innerHTML = `
+            <td colspan="3">TOTAL ${zonaActual}</td>
+            <td>${total.metas}</td>
+            <td>${total.instaladas}</td>
+            <td>${total.proyeccion}</td>
+            <td>-</td>
+            <td>-</td>
+            <td>${total.diferencia}</td>
+        `;
+
+        body.appendChild(trTotal);
+    }
 
     aplicarColores();
 }
@@ -323,6 +374,34 @@ function aplicarColores(){
         }
 
     });
+}
+function calcularTotalesPorZona(datos){
+
+    const totales = {};
+
+    datos.forEach(fila => {
+
+        const zona = fila.ZONA;
+
+        if(!totales[zona]){
+            totales[zona] = {
+                metas: 0,
+                instaladas: 0,
+                digitadas: 0,
+                proyeccion: 0,
+                diferencia: 0
+            };
+        }
+
+        totales[zona].metas += Number(fila["METAS INSTALADAS"]) || 0;
+        totales[zona].instaladas += Number(fila.INSTALADAS) || 0;
+        totales[zona].digitadas += Number(fila.DIGITADAS) || 0;
+        totales[zona].proyeccion += Number(fila["PROYECCION INSTALADAS"]) || 0;
+        totales[zona].diferencia += Number(fila["DIFERENCIA INSTALADAS"]) || 0;
+
+    });
+
+    return totales;
 }
 
 window.onload=iniciarDashboard;
