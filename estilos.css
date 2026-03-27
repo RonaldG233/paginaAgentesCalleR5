@@ -400,7 +400,8 @@ cursor:pointer;
 background:#E2DDB4;
 padding:20px;
 border-radius:15px;
-overflow-x:auto;
+ overflow-x:auto;
+    -webkit-overflow-scrolling: touch; /* 🔥 scroll suave en celular */
 box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
@@ -513,4 +514,57 @@ border-radius:10px;
 }
 .negrilla{
   font-weight: bold;
+}
+@media (max-width: 768px){
+
+    .main_container{
+        flex-direction: column; /* 🔥 apila todo */
+    }
+
+    .sidebar_filtros{
+        width: 100%; /* 🔥 ocupa todo arriba */
+    }
+
+    .dashboard_content{
+        width: 100%;
+    }
+
+}
+@media (max-width: 768px){
+
+    .content_primer_pagina{
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .titulo_primer_pagina{
+        padding:10px 40px; /* 🔥 menos ancho */
+        font-size:18px;
+    }
+
+    .nombreZonaDistrito{
+        padding:8px 20px;
+        font-size:12px;
+    }
+
+}
+@media (max-width: 768px){
+
+    #tablaZonas,
+    #tablaAgentes{
+        font-size:10px; /* 🔥 más compacto */
+    }
+
+    #tablaZonas th,
+    #tablaAgentes th{
+        font-size:9px;
+        padding:6px;
+    }
+
+    #tablaZonas td,
+    #tablaAgentes td{
+        padding:5px;
+    }
+
 }
