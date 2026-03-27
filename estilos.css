@@ -435,13 +435,35 @@ font-size:11px;
 #tablaZonas td,
 #tablaAgentes td{
 padding:6px;
+font-size:11px;
 text-align:center;
 border-bottom:1px solid #eee;
-white-space: nowrap;        /* 🔥 NO rompe línea */
+/* white-space: nowrap;        🔥 NO rompe línea */
 overflow: hidden;
-text-overflow: ellipsis;    /* 🔥 pone "..." si es largo */
-min-width:90px;
+text-overflow: unset ;    /* 🔥 pone "..." si es largo */
+/* min-width:230px; */
 }
+
+#tablaZonas td:nth-child(n+4),
+#tablaAgentes td:nth-child(n+5){
+    white-space: nowrap;  /* números en una línea */
+    width: 80px;
+}
+#tablaZonas td:nth-child(2),
+#tablaZonas td:nth-child(3),
+#tablaAgentes td:nth-child(2),
+#tablaAgentes td:nth-child(3),
+#tablaAgentes td:nth-child(4){
+    white-space: normal;        /* 🔥 permite salto */
+    word-break: break-word;     /* rompe si es necesario */
+    max-width: 120px;
+}
+
+#tablaZonas,
+#tablaAgentes{
+    table-layout: auto; /* 🔥 clave para que respire */
+}
+
 /* ZEBRA */
 
 .grupoA{
