@@ -455,9 +455,10 @@ text-overflow: unset ;    /* 🔥 pone "..." si es largo */
 #tablaAgentes td:nth-child(2),
 #tablaAgentes td:nth-child(3),
 #tablaAgentes td:nth-child(4){
-    white-space: normal;        /* 🔥 permite salto */
-    word-break: break-word;     /* rompe si es necesario */
-    max-width: 120px;
+    white-space: normal;
+    word-break: normal;          /* 🔥 NO rompe palabras */
+    overflow-wrap: break-word;   /* 🔥 solo baja si hay espacio */
+    max-width: 150px;
 }
 
 #tablaZonas,
@@ -553,7 +554,7 @@ border-radius:10px;
 
     #tablaZonas,
     #tablaAgentes{
-        font-size:8px; /* 🔥 más compacto */
+        font-size:6px; /* 🔥 más compacto */
     }
 
     #tablaZonas th,
