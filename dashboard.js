@@ -12,12 +12,34 @@ async function iniciarDashboard(){
             cargarZonas(),
             cargarAgentes()
         ]);
+
+        verificarActualizacion(); // 👈 IMPORTANTE
+
     }catch(e){
         console.log("Error cargando datos:", e);
     }
 
-    guardarFechaActualizacion();
     mostrarFecha();
+}
+
+
+function verificarActualizacion(){
+
+    const datosActuales = JSON.stringify({
+        zonas: datosZonas,
+        agentes: datosAgentes
+    });
+
+    const datosGuardados = localStorage.getItem("datosGuardados");
+
+    // 🔥 Si es la primera vez o cambió algo
+    if(!datosGuardados || datosGuardados !== datosActuales){
+
+        localStorage.setItem("datosGuardados", datosActuales);
+
+        const ahora = new Date();
+        localStorage.setItem("fechaActualizacion", ahora.toISOString());
+    }
 }
 
 // ================= CARGAS =================
@@ -121,10 +143,11 @@ function mostrarZonas(datos){
         let porcentaje=porcentajeSeguro(fila["CUMPLIMIENTO INSTALADAS"]);
 
         tr1.innerHTML=`
+        <td  style="font-weight:bold; class="tipo instaladas">INSTALADAS</td>
         <td>${limpiar(fila.ZONA)}</td>
         <td>${limpiar(fila.DISTRITO)}</td>
         <td>${limpiar(fila["METAS INSTALADAS"])}</td>
-        <td>${limpiar(fila.INSTALADAS)}</td>
+        <td class="negrilla">${limpiar(fila.INSTALADAS)}</td>
         <td>${limpiar(fila["PROYECCION INSTALADAS"])}</td>
         <td class="porcentaje">${porcentaje.toFixed(1)}%</td>
         <td>${limpiar(fila["DEBERIA LLEVAR INSTALADAS"])}</td>
@@ -140,10 +163,11 @@ function mostrarZonas(datos){
         let porcentajeD=porcentajeSeguro(fila["CUMPLIMIENTO DIGITADAS"]);
 
         tr2.innerHTML=`
-        <td style="font-weight:bold;">DIGITADAS</td>
+        <td style="font-weight:bold; class="tipo digitadas">DIGITADAS</td>
+        <td ></td>
         <td></td>
         <td>${limpiar(fila["METAS DIGITADAS"])}</td>
-        <td>${limpiar(fila.DIGITADAS)}</td>
+        <td class="negrilla">${limpiar(fila.DIGITADAS)}</td>
         <td>${limpiar(fila["PROYECCION DIGITADAS"])}</td>
         <td class="porcentaje">${porcentajeD.toFixed(1)}%</td>
         <td>${limpiar(fila["DEBERIA LLEVAR"])}</td>
@@ -174,11 +198,12 @@ function mostrarAgentes(datos){
         let porcentajeI=porcentajeSeguro(a["CUMPLIMIENTO INSTALADAS"]);
 
         tr1.innerHTML=`
+        <td  style="font-weight:bold; class="tipo instaladas">INSTALADAS</td>
         <td>${limpiar(a.AGENTES)}</td>
         <td>${limpiar(a.ZONA)}</td>
         <td>${limpiar(a.DISTRITO)}</td>
         <td>${limpiar(a["METAS INSTALADAS"])}</td>
-        <td>${limpiar(a.INSTALADAS)}</td>
+        <td class="negrilla">${limpiar(a.INSTALADAS)}</td>
         <td>${limpiar(a["PROYECCION INSTALADAS"])}</td>
         <td class="porcentaje">${porcentajeI.toFixed(1)}%</td>
         <td>${limpiar(a["DEBERIA LLEVAR"])}</td>
@@ -194,11 +219,12 @@ function mostrarAgentes(datos){
         let porcentajeD=porcentajeSeguro(a["CUMPLIMIENTO DIGITADAS"]);
 
         tr2.innerHTML=`
-        <td style="font-weight:bold;">DIGITADAS</td>
+        <td style="font-weight:bold; class="tipo digitadas">DIGITADAS</td>
+        <td ></td>
         <td></td>
         <td></td>
         <td>${limpiar(a["METAS DIGITADAS"])}</td>
-        <td>${limpiar(a.DIGITADAS)}</td>
+        <td class="negrilla">${limpiar(a.DIGITADAS)}</td>
         <td>${limpiar(a["PROYECCION DIGITADAS"])}</td>
         <td class="porcentaje">${porcentajeD.toFixed(1)}%</td>
         <td>${limpiar(a["DEBERIA LLEVAR"])}</td>
