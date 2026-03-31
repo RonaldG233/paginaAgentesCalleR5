@@ -1,5 +1,4 @@
-const apiZonas="https://sheetdb.io/api/v1/a5i10sd9u7ehb";
-const apiAgentes="https://sheetdb.io/api/v1/ozvx36oam9947";
+const apiURL = "https://script.google.com/macros/s/AKfycbzuTq3oDcITUAdzRQkrQjXtemUvqgVmsZFWMdCbr0rveBpZnZllINTqYfUHnTiVqkqglQ/exec";
 
 let datosZonas=[];
 let datosAgentes=[];
@@ -8,12 +7,8 @@ let datosAgentes=[];
 async function iniciarDashboard(){
 
     try{
-        await Promise.all([
-            cargarZonas(),
-            cargarAgentes()
-        ]);
-
-        verificarActualizacion(); // 👈 IMPORTANTE
+        await cargarTodo();
+        verificarActualizacion();
 
     }catch(e){
         console.log("Error cargando datos:", e);
@@ -22,7 +17,29 @@ async function iniciarDashboard(){
     mostrarFecha();
 }
 
+// ================= CARGA GENERAL =================
+async function cargarTodo(){
+    try{
+        const res = await fetch(apiURL + "?t=" + new Date().getTime());
+        const data = await res.json();
 
+        datosZonas = data.zonas || [];
+        datosAgentes = data.agentes || [];
+
+        llenarSelectZonas();
+        mostrarZonas(datosZonas);
+
+        llenarSelectAgentes();
+        mostrarAgentes(datosAgentes);
+
+    }catch(e){
+        console.log("Error cargando:", e);
+        datosZonas=[];
+        datosAgentes=[];
+    }
+}
+
+// ================= ACTUALIZACION =================
 function verificarActualizacion(){
 
     const datosActuales = JSON.stringify({
@@ -32,46 +49,12 @@ function verificarActualizacion(){
 
     const datosGuardados = localStorage.getItem("datosGuardados");
 
-    // 🔥 Si es la primera vez o cambió algo
     if(!datosGuardados || datosGuardados !== datosActuales){
 
         localStorage.setItem("datosGuardados", datosActuales);
 
         const ahora = new Date();
         localStorage.setItem("fechaActualizacion", ahora.toISOString());
-    }
-}
-
-// ================= CARGAS =================
-async function cargarZonas(){
-    try{
-        const res=await fetch(apiZonas);
-        const datos=await res.json();
-
-        datosZonas=datos||[];
-
-        llenarSelectZonas();
-        mostrarZonas(datosZonas);
-
-    }catch(e){
-        console.log("Error zonas:", e);
-        datosZonas=[];
-    }
-}
-
-async function cargarAgentes(){
-    try{
-        const res=await fetch(apiAgentes+"?t="+new Date().getTime());
-        const datos=await res.json();
-
-        datosAgentes=datos;
-
-        llenarSelectAgentes();
-        mostrarAgentes(datosAgentes);
-
-    }catch(e){
-        console.log("Error agentes:", e);
-        datosAgentes=[];
     }
 }
 
@@ -138,9 +121,7 @@ function mostrarZonas(datos){
 
     datos.forEach((fila,index)=>{
 
-        // 🔥 CAMBIO DE ZONA → INSERTA TOTALES
         if(zonaActual !== "" && zonaActual !== fila.ZONA){
-
             insertarTotales(body, totales[zonaActual], zonaActual);
         }
 
@@ -148,7 +129,6 @@ function mostrarZonas(datos){
 
         const clase=index%2===0?"grupoA":"grupoB";
 
-        // 🔹 INSTALADAS
         const tr1=document.createElement("tr");
         tr1.classList.add(clase);
 
@@ -168,7 +148,6 @@ function mostrarZonas(datos){
 
         body.appendChild(tr1);
 
-        // 🔹 DIGITADAS
         const tr2=document.createElement("tr");
         tr2.classList.add(clase);
 
@@ -190,7 +169,6 @@ function mostrarZonas(datos){
 
     });
 
-    // 🔥 ÚLTIMO TOTAL
     if(zonaActual){
         insertarTotales(body, totales[zonaActual], zonaActual);
     }
@@ -201,7 +179,6 @@ function mostrarZonas(datos){
 // ================= INSERTAR TOTALES =================
 function insertarTotales(body, total, zona){
 
-    // 🔹 TOTAL INSTALADAS
     const trI=document.createElement("tr");
     trI.classList.add("total-zona");
 
@@ -218,7 +195,6 @@ function insertarTotales(body, total, zona){
 
     body.appendChild(trI);
 
-    // 🔹 TOTAL DIGITADAS
     const trD=document.createElement("tr");
     trD.classList.add("total-zona");
 
@@ -236,7 +212,6 @@ function insertarTotales(body, total, zona){
     body.appendChild(trD);
 }
 
-
 // ================= TABLA AGENTES =================
 function mostrarAgentes(datos){
 
@@ -249,9 +224,7 @@ function mostrarAgentes(datos){
 
     datos.forEach((a,index)=>{
 
-        // 🔥 CAMBIO DE AGENTE → INSERTA TOTALES
         if(agenteActual !== "" && agenteActual !== a.AGENTES){
-
             insertarTotalesAgente(body, totales[agenteActual], agenteActual);
         }
 
@@ -259,7 +232,6 @@ function mostrarAgentes(datos){
 
         const clase=index%2===0?"grupoA":"grupoB";
 
-        // 🔹 INSTALADAS
         const tr1=document.createElement("tr");
         tr1.classList.add(clase);
 
@@ -280,7 +252,6 @@ function mostrarAgentes(datos){
 
         body.appendChild(tr1);
 
-        // 🔹 DIGITADAS
         const tr2=document.createElement("tr");
         tr2.classList.add(clase);
 
@@ -303,7 +274,6 @@ function mostrarAgentes(datos){
 
     });
 
-    // 🔥 ÚLTIMO TOTAL
     if(agenteActual){
         insertarTotalesAgente(body, totales[agenteActual], agenteActual);
     }
@@ -313,7 +283,6 @@ function mostrarAgentes(datos){
 
 function insertarTotalesAgente(body, total, agente){
 
-    // 🔹 TOTAL INSTALADAS
     const trI=document.createElement("tr");
     trI.classList.add("total-zona");
 
@@ -330,7 +299,6 @@ function insertarTotalesAgente(body, total, agente){
 
     body.appendChild(trI);
 
-    // 🔹 TOTAL DIGITADAS
     const trD=document.createElement("tr");
     trD.classList.add("total-zona");
 
@@ -350,46 +318,23 @@ function insertarTotalesAgente(body, total, agente){
 
 // ================= UTILIDADES =================
 function limpiar(valor){
-
-    if(
-        valor===undefined ||
-        valor===null ||
-        valor==="" ||
-        valor==="#REF!" ||
-        valor==="#DIV/0!" ||
-        valor==="#¡DIV/0!" ||
-        valor==="NaN" ||
-        valor==="NaN%"
-    ){
+    if(valor===undefined || valor===null || valor==="" || valor==="#REF!" || valor==="#DIV/0!" || valor==="NaN"){
         return 0;
     }
-
     return valor;
 }
 
 function porcentajeSeguro(valor){
-
     valor = limpiar(valor);
-
     if(typeof valor === "string"){
         valor = valor.replace("%","").trim();
     }
-
     let num = Number(valor);
-
     if(isNaN(num)) return 0;
-
     return num;
 }
 
-// ================= FECHA (NUEVO) =================
-function guardarFechaActualizacion(){
-
-    const ahora = new Date();
-    localStorage.setItem("fechaActualizacion", ahora.toISOString());
-
-}
-
+// ================= FECHA =================
 function mostrarFecha(){
 
     let fechaGuardada = localStorage.getItem("fechaActualizacion");
@@ -434,7 +379,9 @@ function aplicarColores(){
 
     });
 }
-    function calcularTotalesPorZona(datos){
+
+// ================= TOTALES =================
+function calcularTotalesPorZona(datos){
 
     const totales = {};
 
@@ -487,13 +434,11 @@ function calcularTotalesPorAgente(datos){
             };
         }
 
-        // 🔹 INSTALADAS
         totales[agente].instaladas.metas += Number(a["METAS INSTALADAS"])||0;
         totales[agente].instaladas.valor += Number(a.INSTALADAS)||0;
         totales[agente].instaladas.proyeccion += Number(a["PROYECCION INSTALADAS"])||0;
         totales[agente].instaladas.diferencia += Number(a["DIFERENCIA"])||0;
 
-        // 🔹 DIGITADAS
         totales[agente].digitadas.metas += Number(a["METAS DIGITADAS"])||0;
         totales[agente].digitadas.valor += Number(a.DIGITADAS)||0;
         totales[agente].digitadas.proyeccion += Number(a["PROYECCION DIGITADAS"])||0;
@@ -501,7 +446,6 @@ function calcularTotalesPorAgente(datos){
 
     });
 
-    // 🔥 CALCULAR PORCENTAJES
     for(let agente in totales){
 
         let i = totales[agente].instaladas;
