@@ -5,11 +5,9 @@ let datosAgentes=[];
 
 // ================= INIT =================
 async function iniciarDashboard(){
-
     try{
         await cargarTodo();
         verificarActualizacion();
-
     }catch(e){
         console.log("Error cargando datos:", e);
     }
@@ -50,7 +48,6 @@ function verificarActualizacion(){
     const datosGuardados = localStorage.getItem("datosGuardados");
 
     if(!datosGuardados || datosGuardados !== datosActuales){
-
         localStorage.setItem("datosGuardados", datosActuales);
 
         const ahora = new Date();
@@ -212,7 +209,54 @@ function insertarTotales(body, total, zona){
     body.appendChild(trD);
 }
 
-// ================= TABLA AGENTES =================
+// ================= TOTALES CORREGIDOS =================
+function calcularTotalesPorZona(datos){
+
+    const totales = {};
+
+    datos.forEach(fila => {
+
+        const zona = fila.ZONA;
+
+        if(!totales[zona]){
+            totales[zona] = {
+                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0},
+                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0}
+            };
+        }
+
+        // SUMAS
+        totales[zona].instaladas.metas += Number(fila["METAS INSTALADAS"])||0;
+        totales[zona].instaladas.valor += Number(fila.INSTALADAS)||0;
+        totales[zona].instaladas.proyeccion += Number(fila["PROYECCION INSTALADAS"])||0;
+        totales[zona].instaladas.diferencia += Number(fila["DIFERENCIA INSTALADAS"])||0;
+
+        totales[zona].digitadas.metas += Number(fila["METAS DIGITADAS"])||0;
+        totales[zona].digitadas.valor += Number(fila.DIGITADAS)||0;
+        totales[zona].digitadas.proyeccion += Number(fila["PROYECCION DIGITADAS"])||0;
+        totales[zona].digitadas.diferencia += Number(fila.DIFERENCIA)||0;
+
+        // 🔥 PROMEDIO REAL DE PORCENTAJES
+        totales[zona].instaladas.sumaPorcentaje += porcentajeSeguro(fila["CUMPLIMIENTO INSTALADAS"]);
+        totales[zona].instaladas.contador++;
+
+        totales[zona].digitadas.sumaPorcentaje += porcentajeSeguro(fila["CUMPLIMIENTO DIGITADAS"]);
+        totales[zona].digitadas.contador++;
+
+    });
+
+    // CALCULO FINAL
+    for(let zona in totales){
+
+        let i = totales[zona].instaladas;
+        let d = totales[zona].digitadas;
+
+        i.porcentaje = i.contador > 0 ? i.sumaPorcentaje / i.contador : 0;
+        d.porcentaje = d.contador > 0 ? d.sumaPorcentaje / d.contador : 0;
+    }
+
+    return totales;
+}
 function mostrarAgentes(datos){
 
     const body=document.getElementById("bodyAgentes");
@@ -281,6 +325,52 @@ function mostrarAgentes(datos){
     aplicarColores();
 }
 
+function calcularTotalesPorAgente(datos){
+
+    const totales = {};
+
+    datos.forEach(a => {
+
+        const agente = a.AGENTES;
+
+        if(!totales[agente]){
+            totales[agente] = {
+                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0},
+                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0}
+            };
+        }
+
+        // SUMAS
+        totales[agente].instaladas.metas += Number(a["METAS INSTALADAS"])||0;
+        totales[agente].instaladas.valor += Number(a.INSTALADAS)||0;
+        totales[agente].instaladas.proyeccion += Number(a["PROYECCION INSTALADAS"])||0;
+        totales[agente].instaladas.diferencia += Number(a["DIFERENCIA"])||0;
+
+        totales[agente].digitadas.metas += Number(a["METAS DIGITADAS"])||0;
+        totales[agente].digitadas.valor += Number(a.DIGITADAS)||0;
+        totales[agente].digitadas.proyeccion += Number(a["PROYECCION DIGITADAS"])||0;
+        totales[agente].digitadas.diferencia += Number(a["DIFERENCIA"])||0;
+
+        // 🔥 PROMEDIO DE PORCENTAJES
+        totales[agente].instaladas.sumaPorcentaje += porcentajeSeguro(a["CUMPLIMIENTO INSTALADAS"]);
+        totales[agente].instaladas.contador++;
+
+        totales[agente].digitadas.sumaPorcentaje += porcentajeSeguro(a["CUMPLIMIENTO DIGITADAS"]);
+        totales[agente].digitadas.contador++;
+
+    });
+
+    for(let agente in totales){
+
+        let i = totales[agente].instaladas;
+        let d = totales[agente].digitadas;
+
+        i.porcentaje = i.contador > 0 ? i.sumaPorcentaje / i.contador : 0;
+        d.porcentaje = d.contador > 0 ? d.sumaPorcentaje / d.contador : 0;
+    }
+
+    return totales;
+}
 function insertarTotalesAgente(body, total, agente){
 
     const trI=document.createElement("tr");
@@ -316,6 +406,8 @@ function insertarTotalesAgente(body, total, agente){
     body.appendChild(trD);
 }
 
+
+
 // ================= UTILIDADES =================
 function limpiar(valor){
     if(valor===undefined || valor===null || valor==="" || valor==="#REF!" || valor==="#DIV/0!" || valor==="NaN"){
@@ -326,11 +418,14 @@ function limpiar(valor){
 
 function porcentajeSeguro(valor){
     valor = limpiar(valor);
+
     if(typeof valor === "string"){
         valor = valor.replace("%","").trim();
     }
+
     let num = Number(valor);
     if(isNaN(num)) return 0;
+
     return num;
 }
 
@@ -378,84 +473,6 @@ function aplicarColores(){
         }
 
     });
-}
-
-// ================= TOTALES =================
-function calcularTotalesPorZona(datos){
-
-    const totales = {};
-
-    datos.forEach(fila => {
-
-        const zona = fila.ZONA;
-
-        if(!totales[zona]){
-            totales[zona] = {
-                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0},
-                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0}
-            };
-        }
-
-        totales[zona].instaladas.metas += Number(fila["METAS INSTALADAS"])||0;
-        totales[zona].instaladas.valor += Number(fila.INSTALADAS)||0;
-        totales[zona].instaladas.proyeccion += Number(fila["PROYECCION INSTALADAS"])||0;
-        totales[zona].instaladas.diferencia += Number(fila["DIFERENCIA INSTALADAS"])||0;
-
-        totales[zona].digitadas.metas += Number(fila["METAS DIGITADAS"])||0;
-        totales[zona].digitadas.valor += Number(fila.DIGITADAS)||0;
-        totales[zona].digitadas.proyeccion += Number(fila["PROYECCION DIGITADAS"])||0;
-        totales[zona].digitadas.diferencia += Number(fila.DIFERENCIA)||0;
-
-    });
-
-    for(let zona in totales){
-        let i=totales[zona].instaladas;
-        let d=totales[zona].digitadas;
-
-        i.porcentaje=i.metas>0?(i.valor/i.metas)*100:0;
-        d.porcentaje=d.metas>0?(d.valor/d.metas)*100:0;
-    }
-
-    return totales;
-}
-
-function calcularTotalesPorAgente(datos){
-
-    const totales = {};
-
-    datos.forEach(a => {
-
-        const agente = a.AGENTES;
-
-        if(!totales[agente]){
-            totales[agente] = {
-                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0},
-                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0}
-            };
-        }
-
-        totales[agente].instaladas.metas += Number(a["METAS INSTALADAS"])||0;
-        totales[agente].instaladas.valor += Number(a.INSTALADAS)||0;
-        totales[agente].instaladas.proyeccion += Number(a["PROYECCION INSTALADAS"])||0;
-        totales[agente].instaladas.diferencia += Number(a["DIFERENCIA"])||0;
-
-        totales[agente].digitadas.metas += Number(a["METAS DIGITADAS"])||0;
-        totales[agente].digitadas.valor += Number(a.DIGITADAS)||0;
-        totales[agente].digitadas.proyeccion += Number(a["PROYECCION DIGITADAS"])||0;
-        totales[agente].digitadas.diferencia += Number(a["DIFERENCIA"])||0;
-
-    });
-
-    for(let agente in totales){
-
-        let i = totales[agente].instaladas;
-        let d = totales[agente].digitadas;
-
-        i.porcentaje = i.metas > 0 ? (i.valor / i.metas) * 100 : 0;
-        d.porcentaje = d.metas > 0 ? (d.valor / d.metas) * 100 : 0;
-    }
-
-    return totales;
 }
 
 window.onload=iniciarDashboard;
