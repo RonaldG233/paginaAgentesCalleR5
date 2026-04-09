@@ -220,39 +220,32 @@ function calcularTotalesPorZona(datos){
 
         if(!totales[zona]){
             totales[zona] = {
-                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0},
-                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0}
+                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0},
+                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0}
             };
         }
 
-        // SUMAS
+        // SUMAS INSTALADAS
         totales[zona].instaladas.metas += Number(fila["METAS INSTALADAS"])||0;
         totales[zona].instaladas.valor += Number(fila.INSTALADAS)||0;
         totales[zona].instaladas.proyeccion += Number(fila["PROYECCION INSTALADAS"])||0;
         totales[zona].instaladas.diferencia += Number(fila["DIFERENCIA INSTALADAS"])||0;
 
+        // SUMAS DIGITADAS
         totales[zona].digitadas.metas += Number(fila["METAS DIGITADAS"])||0;
         totales[zona].digitadas.valor += Number(fila.DIGITADAS)||0;
         totales[zona].digitadas.proyeccion += Number(fila["PROYECCION DIGITADAS"])||0;
         totales[zona].digitadas.diferencia += Number(fila.DIFERENCIA)||0;
-
-        // 🔥 PROMEDIO REAL DE PORCENTAJES
-        totales[zona].instaladas.sumaPorcentaje += porcentajeSeguro(fila["CUMPLIMIENTO INSTALADAS"]);
-        totales[zona].instaladas.contador++;
-
-        totales[zona].digitadas.sumaPorcentaje += porcentajeSeguro(fila["CUMPLIMIENTO DIGITADAS"]);
-        totales[zona].digitadas.contador++;
-
     });
 
-    // CALCULO FINAL
+    // 🔥 CALCULO DEL PORCENTAJE (PROYECCION / META)
     for(let zona in totales){
 
         let i = totales[zona].instaladas;
         let d = totales[zona].digitadas;
 
-        i.porcentaje = i.contador > 0 ? i.sumaPorcentaje / i.contador : 0;
-        d.porcentaje = d.contador > 0 ? d.sumaPorcentaje / d.contador : 0;
+        i.porcentaje = i.metas > 0 ? (i.proyeccion / i.metas) * 100 : 0;
+        d.porcentaje = d.metas > 0 ? (d.proyeccion / d.metas) * 100 : 0;
     }
 
     return totales;
@@ -335,38 +328,32 @@ function calcularTotalesPorAgente(datos){
 
         if(!totales[agente]){
             totales[agente] = {
-                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0},
-                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,sumaPorcentaje:0,contador:0,porcentaje:0}
+                instaladas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0},
+                digitadas:{metas:0,valor:0,proyeccion:0,diferencia:0,porcentaje:0}
             };
         }
 
-        // SUMAS
+        // SUMAS INSTALADAS
         totales[agente].instaladas.metas += Number(a["METAS INSTALADAS"])||0;
         totales[agente].instaladas.valor += Number(a.INSTALADAS)||0;
         totales[agente].instaladas.proyeccion += Number(a["PROYECCION INSTALADAS"])||0;
         totales[agente].instaladas.diferencia += Number(a["DIFERENCIA"])||0;
 
+        // SUMAS DIGITADAS
         totales[agente].digitadas.metas += Number(a["METAS DIGITADAS"])||0;
         totales[agente].digitadas.valor += Number(a.DIGITADAS)||0;
         totales[agente].digitadas.proyeccion += Number(a["PROYECCION DIGITADAS"])||0;
         totales[agente].digitadas.diferencia += Number(a["DIFERENCIA"])||0;
-
-        // 🔥 PROMEDIO DE PORCENTAJES
-        totales[agente].instaladas.sumaPorcentaje += porcentajeSeguro(a["CUMPLIMIENTO INSTALADAS"]);
-        totales[agente].instaladas.contador++;
-
-        totales[agente].digitadas.sumaPorcentaje += porcentajeSeguro(a["CUMPLIMIENTO DIGITADAS"]);
-        totales[agente].digitadas.contador++;
-
     });
 
+    // 🔥 CALCULO DEL PORCENTAJE (PROYECCION / META)
     for(let agente in totales){
 
         let i = totales[agente].instaladas;
         let d = totales[agente].digitadas;
 
-        i.porcentaje = i.contador > 0 ? i.sumaPorcentaje / i.contador : 0;
-        d.porcentaje = d.contador > 0 ? d.sumaPorcentaje / d.contador : 0;
+        i.porcentaje = i.metas > 0 ? (i.proyeccion / i.metas) * 100 : 0;
+        d.porcentaje = d.metas > 0 ? (d.proyeccion / d.metas) * 100 : 0;
     }
 
     return totales;
