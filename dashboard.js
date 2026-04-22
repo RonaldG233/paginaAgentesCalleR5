@@ -419,25 +419,22 @@ function porcentajeSeguro(valor){
 // ================= FECHA =================
 function mostrarFecha(){
 
-    let fechaGuardada = localStorage.getItem("fechaActualizacion");
-
-    if(!fechaGuardada){
-        document.getElementById("fechaHoy").textContent = "Sin actualizaciones";
+    if(datosZonas.length === 0){
+        document.getElementById("fechaHoy").textContent = "Sin datos";
         return;
     }
 
-    const fecha = new Date(fechaGuardada);
+    // 🔥 TOMAMOS LA FECHA DE LA PRIMERA FILA
+    let fecha = datosZonas[0]["ULTIMA ACTUALIZACION"];
 
-    const opciones={
-        year:'numeric',
-        month:'long',
-        day:'numeric'
-    };
+    if(!fecha){
+        document.getElementById("fechaHoy").textContent = "Sin actualización";
+        return;
+    }
 
-    document.getElementById("fechaHoy").textContent=
-    "Actualizado: "+fecha.toLocaleDateString("es-ES",opciones);
+    document.getElementById("fechaHoy").textContent =
+        "Actualizado: " + fecha;
 }
-
 // ================= COLORES =================
 function aplicarColores(){
 
