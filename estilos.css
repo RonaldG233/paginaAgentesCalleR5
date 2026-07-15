@@ -316,7 +316,10 @@ span {
 /*PAGINA VENTAAS*/
 /* Reset básico para que todo se vea limpio */
 body{
-background:#fcfcfc;
+
+    background: radial-gradient(circle at top, #0a0a0a, #000000);
+    color: #ffffff;
+
 padding:20px;
 overflow-x:hidden;
 font-family:Arial, Helvetica, sans-serif;
@@ -330,6 +333,7 @@ align-items:center;
 justify-content:space-between;
 margin-bottom:25px;
 gap: -40px;
+    backdrop-filter: blur(10px);
 }
 
 .titulo_primer_pagina{
@@ -339,6 +343,10 @@ padding:12px 120px;
 font-size:26px;
 font-weight:bold;
 border-radius:0 30px 30px 0;
+
+    box-shadow: 0 0 20px rgba(228,54,54,0.6);
+    letter-spacing: 2px;
+
 }
 
 .titulo_logo{
@@ -355,6 +363,12 @@ background:#E2DDB4;
 padding:10px 35px;
 border-radius:12px;
 font-weight:bold;
+
+    background: rgba(226,221,180,0.1);
+    color: #E2DDB4;
+    border: 1px solid rgba(226,221,180,0.3);
+    backdrop-filter: blur(6px);
+
 }
 
 /* ================= LAYOUT ================= */
@@ -383,6 +397,12 @@ border-radius:12px;
 display:flex;
 flex-direction:column;
 gap:8px;
+
+  background: rgba(226,221,180,0.08);
+    border: 1px solid rgba(226,221,180,0.2);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
 }
 
 .select_filtro{
@@ -392,6 +412,14 @@ border:none;
 padding:8px;
 border-radius:6px;
 cursor:pointer;
+
+    background: #E43636;
+    box-shadow: 0 0 10px rgba(228,54,54,0.5);
+
+}
+
+.select_filtro:hover{
+    transform: scale(1.03);
 }
 
 /* ================= TABLA ================= */
@@ -408,6 +436,12 @@ box-shadow:0 4px 15px rgba(0,0,0,0.08);
     max-height: 400px; /* o el alto que quieras */
     overflow-y: auto;
     padding: 0;
+    
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+
 }
 
 #tablaZonas,
@@ -419,6 +453,10 @@ background:white;
 border-radius:10px;
 /* overflow:hidden; */
 font-size:12px;
+
+    background: #0c0c0c;
+    color: white;
+
 }
 
 /* HEADER TABLA */
@@ -428,6 +466,10 @@ font-size:12px;
 background:#E43636;
 color:#F6EFD2;
 text-transform:uppercase;
+
+    background: linear-gradient(90deg, #E43636, #ff5a5a);
+    box-shadow: 0 0 15px rgba(228,54,54,0.6)
+
 }
 
 #tablaZonas th,
@@ -476,10 +518,12 @@ text-overflow: unset ;    /* 🔥 pone "..." si es largo */
 
 .grupoA{
 background:white;
+    background: rgba(255,255,255,0.03);
 }
 
 .grupoB{
 background:#F6EFD2;
+    background: rgba(255,255,255,0.08);
 }
 
 /* HOVER */
@@ -488,6 +532,10 @@ background:#F6EFD2;
 #tablaAgentes tbody tr:hover{
 background:#ffdede;
 transition:0.2s;
+
+    background: rgba(228,54,54,0.2);
+    transform: scale(1.01);
+
 }
 
 /* ================= COLORES CUMPLIMIENTO ================= */
@@ -518,6 +566,7 @@ height:8px;
 .tablaDistritos::-webkit-scrollbar-thumb{
 background:#E43636;
 border-radius:10px;
+    background: linear-gradient(#E43636, #ff6b6b);
 }
 .negrilla{
   font-weight: bold;
@@ -590,6 +639,11 @@ border-radius:10px;
     background:#000;
     color:#fff;
     font-weight:bold;
+    
+    background: linear-gradient(90deg, #000000, #1a1a1a);
+    border-top: 2px solid #E43636;
+    box-shadow: 0 0 15px rgba(228,54,54,0.4)
+
 }
 
 /* 🔥 Hacer encabezado fijo */
@@ -599,4 +653,41 @@ border-radius:10px;
     top: 0;
     z-index: 10;
     background: #E43636; /* importante para que no se transparente */
+}
+
+canvas{
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 10px;
+    backdrop-filter: blur(8px);
+}
+
+/* 🔥 ESTE MANDA REALMENTE EL TAMAÑO */
+.grafica-box{
+    height: 240px;   /* 👈 AJUSTA AQUÍ */
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.fila-graficas{
+    display: flex;
+    gap: 20px;
+    /* flex-wrap: wrap; 🔥 clave */
+}
+
+
+/* 🔥 que queden mitad y mitad */
+.fila-graficas .grafica-box{
+    flex: 1;
+    width: 45%;
+    height: 240px;
+}
+
+@media (max-width: 768px){
+    .fila-graficas{
+        flex-direction: column;
+    }
+    .fila-graficas .grafica-box{
+        width: 100%;
+    }
 }

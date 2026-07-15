@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ventas - Dashboard</title>
 <link rel="stylesheet" href="variables.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -16,7 +18,7 @@
 <div class="titulo_primer_pagina">VENTAS</div>
 
 <div class="titulo_logo">
-<img src="LOGOR5.jpg" class="titulo_sayayin">
+<img src="logo R5 fondoNegro.png" class="titulo_sayayin">
 </div>
 
 <div class="nombreZonaDistrito">
@@ -47,9 +49,24 @@
 
 <div class="dashboard_content">
 
+<div class="fila-graficas">
+
+        <div class="grafica-box">
+            <canvas id="graficaZonas"></canvas>
+        </div>
+
+        <div class="grafica-box">
+            <canvas id="graficaComparacionZonas"></canvas>
+        </div>
+
+    </div>
+
+
+
 <div class="tablaDistritos full-width">
 
 <table id="tablaZonas">
+    
 
 <thead>
 
@@ -96,6 +113,18 @@
 
 
 <div class="dashboard_content">
+    
+<div class="fila-graficas">
+
+        <div class="grafica-box">
+            <canvas id="graficaAgentes"></canvas>
+        </div>
+
+        <div class="grafica-box">
+            <canvas id="graficaComparacionAgentes"></canvas>
+        </div>
+
+    </div>
 
 <div class="tablaDistritos full-width">
 

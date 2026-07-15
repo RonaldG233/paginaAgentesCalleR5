@@ -30,6 +30,12 @@ async function cargarTodo(){
         llenarSelectAgentes();
         mostrarAgentes(datosAgentes);
 
+        crearGraficaZonas(datosZonas);
+        crearGraficaAgentes(datosAgentes);
+
+        crearGraficaComparacionZonas(datosZonas);
+        crearGraficaComparacionAgentes(datosAgentes);
+
     }catch(e){
         console.log("Error cargando:", e);
         datosZonas=[];
@@ -73,11 +79,18 @@ function llenarSelectZonas(){
 
         if(zona==""){
             mostrarZonas(datosZonas);
+            
+            crearGraficaZonas(datosZonas);
+            crearGraficaComparacionZonas(datosZonas);
+
             return;
         }
 
         const filtrado=datosZonas.filter(f=>f.ZONA==zona);
         mostrarZonas(filtrado);
+        crearGraficaZonas(filtrado);
+        crearGraficaComparacionZonas(filtrado);
+        
     });
 }
 
@@ -98,11 +111,17 @@ function llenarSelectAgentes(){
 
         if(agente==""){
             mostrarAgentes(datosAgentes);
+            
+            crearGraficaAgentes(datosAgentes);
+            crearGraficaComparacionAgentes(datosAgentes);
+
             return;
         }
 
         const filtrado=datosAgentes.filter(a=>a.AGENTES==agente);
         mostrarAgentes(filtrado);
+        crearGraficaAgentes(filtrado);
+        crearGraficaComparacionAgentes(filtrado);
     });
 }
 
@@ -458,5 +477,240 @@ function aplicarColores(){
 
     });
 }
+function crearGraficaZonas(datos){
 
+    const totales = calcularTotalesPorZona(datos);
+
+    const labels = [];
+    const valores = [];
+
+    for(let zona in totales){
+        labels.push(zona);
+        valores.push(totales[zona].instaladas.porcentaje.toFixed(1));
+    }
+
+    const ctx = document.getElementById("graficaZonas").getContext("2d");
+
+    if(window.chartZonas) window.chartZonas.destroy();
+
+    window.chartZonas = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "% Cumplimiento",
+                data: valores,
+                backgroundColor: "#E43636",
+                borderRadius: 6
+            }]
+        },
+        options: { 
+            responsive:true,
+            maintainAspectRatio: false, 
+            plugins:{
+                legend:{display:false}
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{color:"#fff"},
+                    grid:{color:"rgba(255,255,255,0.1)"}
+                },
+                x:{
+                    ticks:{color:"#fff"},
+                    grid:{display:false},
+                    // maxRotation: 0,  // 🔥 evita que se roten
+                    // minRotation: 0,
+                    autoSkip: true,   // 🔥 evita amontonamiento
+                    
+                    font:{
+                        size: 8
+                    }
+
+                    
+
+                }
+            }
+        }
+    });
+}
+function crearGraficaAgentes(datos){
+
+    const totales = calcularTotalesPorAgente(datos);
+
+    const labels = [];
+    const valores = [];
+
+    for(let agente in totales){
+        labels.push(agente);
+        valores.push(totales[agente].instaladas.porcentaje.toFixed(1));
+    }
+
+    const ctx = document.getElementById("graficaAgentes").getContext("2d");
+
+    if(window.chartAgentes) window.chartAgentes.destroy();
+
+    window.chartAgentes = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "% Cumplimiento",
+                data: valores,
+                backgroundColor: "#ff6b6b",
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive:true,
+            maintainAspectRatio: false, 
+            plugins:{
+                legend:{display:false}
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{color:"#fff"},
+                    grid:{color:"rgba(255,255,255,0.1)"}
+                },
+                x:{
+                    ticks:{color:"#fff"},
+                    grid:{display:false},
+                    // maxRotation: 0,  // 🔥 evita que se roten
+                    // minRotation: 0,
+                    autoSkip: true,
+                    font:{
+                        size: 6
+                    }
+                }
+            }
+        }
+    });
+}
+function crearGraficaComparacionZonas(datos){
+
+    const totales = calcularTotalesPorZona(datos);
+
+    const labels = [];
+    const instaladas = [];
+    const proyeccion = [];
+
+    for(let zona in totales){
+        labels.push(zona);
+        instaladas.push(totales[zona].instaladas.valor);
+        proyeccion.push(totales[zona].instaladas.proyeccion);
+    }
+
+    const ctx = document.getElementById("graficaComparacionZonas").getContext("2d");
+
+    if(window.chartComparacion) window.chartComparacion.destroy();
+
+    window.chartComparacion = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Instaladas",
+                    data: instaladas,
+                    backgroundColor: "#28a745" // verde
+                },
+                {
+                    label: "Proyección",
+                    data: proyeccion,
+                    backgroundColor: "#E43636" // rojo Claro
+                }
+            ]
+        },
+        options: {
+            responsive:true,
+            maintainAspectRatio: false, 
+            plugins:{
+                legend:{
+                    labels:{color:"#fff"}
+                }
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{color:"#fff"},
+                    grid:{color:"rgba(255,255,255,0.1)"}
+                },
+                x:{
+                    ticks:{color:"#fff"},
+                    // maxRotation: 0,  // 🔥 evita que se roten
+                    // minRotation: 0,
+                    autoSkip: true,
+                    font:{
+                        size: 8
+                    }
+                }
+            }
+        }
+    });
+}
+function crearGraficaComparacionAgentes(datos){
+
+    const totales = calcularTotalesPorAgente(datos);
+
+    const labels = [];
+    const instaladas = [];
+    const proyeccion = [];
+
+    for(let agente in totales){
+        labels.push(agente);
+        instaladas.push(totales[agente].instaladas.valor);
+        proyeccion.push(totales[agente].instaladas.proyeccion);
+    }
+
+    const ctx = document.getElementById("graficaComparacionAgentes").getContext("2d");
+
+    if(window.chartComparacionAgentes) window.chartComparacionAgentes.destroy();
+
+    window.chartComparacionAgentes = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Instaladas",
+                    data: instaladas,
+                    backgroundColor: "#28a745"
+                },
+                {
+                    label: "Proyección",
+                    data: proyeccion,
+                    backgroundColor: "#E43636"
+                }
+            ]
+        },
+        options: {
+            responsive:true,
+            maintainAspectRatio: false,
+            plugins:{
+                legend:{
+                    labels:{color:"#fff"}
+                }
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{color:"#fff"},
+                    grid:{color:"rgba(255,255,255,0.1)"}
+                },
+                x:{
+                    ticks:{
+                        color:"#fff",
+                        // maxRotation: 0,
+                        // minRotation: 0,
+                        autoSkip: true,
+                        font:{
+                        size: 8
+                    }
+                    }
+                }
+            }
+        }
+    });
+}
 window.onload=iniciarDashboard;
