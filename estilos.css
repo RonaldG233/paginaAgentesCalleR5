@@ -316,237 +316,282 @@ span {
 /*PAGINA VENTAAS*/
 /* Reset básico para que todo se vea limpio */
 body{
-background:#fcfcfc;
-padding:20px;
-overflow-x:hidden;
-font-family:Arial, Helvetica, sans-serif;
+    background:#fcfcfc;
+    color:#222;
+    padding:20px;
+    overflow-x:hidden;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 /* ================= HEADER ================= */
 
 .content_primer_pagina{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:25px;
-gap: -40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:25px;
 }
 
 .titulo_primer_pagina{
-background:#E43636;
-color:#E2DDB4;
-padding:12px 120px;
-font-size:26px;
-font-weight:bold;
-border-radius:0 30px 30px 0;
+    background:#E43636;
+    color:#E2DDB4;
+    padding:12px 120px;
+    font-size:26px;
+    font-weight:bold;
+    border-radius:0 30px 30px 0;
+    box-shadow:0 3px 12px rgba(228,54,54,0.25);
 }
 
 .titulo_logo{
-display:flex;
-justify-content:center;
+    display:flex;
+    justify-content:center;
 }
 
 .titulo_sayayin{
-width:80px;
+    width:80px;
 }
 
 .nombreZonaDistrito{
-background:#E2DDB4;
-padding:10px 35px;
-border-radius:12px;
-font-weight:bold;
+    background:#E2DDB4;
+    color:#222;
+    padding:10px 35px;
+    border-radius:12px;
+    font-weight:bold;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
 }
 
 /* ================= LAYOUT ================= */
 
 .main_container{
-display:flex;
-gap:20px;
-margin-bottom:40px;
+    display:flex;
+    gap:20px;
+    margin-bottom:40px;
 }
 
 .sidebar_filtros{
-width:260px;
+    width:260px;
 }
 
 .dashboard_content{
-flex:1;
-min-width:0;
+    flex:1;
+    min-width:0;
 }
 
 /* ================= FILTROS ================= */
 
 .filtro_primer_pagina{
-background:#E2DDB4;
-padding:20px;
-border-radius:12px;
-display:flex;
-flex-direction:column;
-gap:8px;
+    background:#E2DDB4;
+    padding:20px;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
 .select_filtro{
-background:#E43636;
-color:#fff;
-border:none;
-padding:8px;
-border-radius:6px;
-cursor:pointer;
+    background:#E43636;
+    color:white;
+    border:none;
+    padding:8px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
 }
 
-/* ================= TABLA ================= */
+.select_filtro:hover{
+    transform:scale(1.03);
+}
+
+/* ================= GRAFICAS ================= */
+
+.fila-graficas{
+    display:flex;
+    gap:20px;
+}
+
+.grafica-box{
+    flex:1;
+    width:45%;
+    height:240px;
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+canvas{
+    background:transparent;
+}
+
+/* ================= TABLAS ================= */
 
 .tablaDistritos{
-    position: relative; /* 🔥 importante */
-    z-index: 1;
-background:#E2DDB4;
-padding:20px;
-border-radius:15px;
- overflow-x:auto;
-    -webkit-overflow-scrolling: touch; /* 🔥 scroll suave en celular */
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
-    max-height: 400px; /* o el alto que quieras */
-    overflow-y: auto;
-    padding: 0;
+    position:relative;
+    z-index:1;
+    background:#E2DDB4;
+    border-radius:15px;
+    overflow-x:auto;
+    overflow-y:auto;
+    max-height:400px;
+    padding:0;
+    -webkit-overflow-scrolling:touch;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
 #tablaZonas,
 #tablaAgentes{
-width:100%;
-table-layout:fixed;
-border-collapse:collapse;
-background:white;
-border-radius:10px;
-/* overflow:hidden; */
-font-size:12px;
+    width:100%;
+    border-collapse:collapse;
+    table-layout:auto;
+    background:white;
+    color:#222;
+    font-size:12px;
 }
 
 /* HEADER TABLA */
 
 #tablaZonas thead,
 #tablaAgentes thead{
-background:#E43636;
-color:#F6EFD2;
-text-transform:uppercase;
+    background:#E43636;
+    color:#F6EFD2;
+    text-transform:uppercase;
 }
 
 #tablaZonas th,
 #tablaAgentes th{
-padding:8px;
-font-size:11px;
-
+    padding:8px;
+    font-size:11px;
 }
 
 /* CELDAS */
 
 #tablaZonas td,
 #tablaAgentes td{
-padding:6px;
-font-size:11px;
-text-align:center;
-border-bottom:1px solid #eee;
-/* white-space: nowrap;        🔥 NO rompe línea */
-overflow: hidden;
-text-overflow: unset ;    /* 🔥 pone "..." si es largo */
-/* min-width:230px; */
+    padding:6px;
+    font-size:11px;
+    text-align:center;
+    border-bottom:1px solid #e5e5e5;
+    overflow:hidden;
 }
 
 #tablaZonas td:nth-child(n+4),
 #tablaAgentes td:nth-child(n+5){
-    white-space: nowrap;  /* números en una línea */
-    width: 80px;
+    white-space:nowrap;
+    width:80px;
 }
+
 #tablaZonas td:nth-child(2),
 #tablaZonas td:nth-child(3),
 #tablaAgentes td:nth-child(2),
 #tablaAgentes td:nth-child(3),
 #tablaAgentes td:nth-child(4){
-    white-space: normal;
-    word-break: normal;          /* 🔥 NO rompe palabras */
-    overflow-wrap: break-word;   /* 🔥 solo baja si hay espacio */
-    max-width: 150px;
+    white-space:normal;
+    overflow-wrap:break-word;
+    max-width:150px;
 }
 
-#tablaZonas,
-#tablaAgentes{
-    table-layout: auto; /* 🔥 clave para que respire */
-}
-
-/* ZEBRA */
+/* FILAS */
 
 .grupoA{
-background:white;
+    background:white;
 }
 
 .grupoB{
-background:#F6EFD2;
+    background:#F6EFD2;
 }
 
 /* HOVER */
 
 #tablaZonas tbody tr:hover,
 #tablaAgentes tbody tr:hover{
-background:#ffdede;
-transition:0.2s;
+    background:#ffdede;
+    transition:.2s;
 }
 
 /* ================= COLORES CUMPLIMIENTO ================= */
 
 .cumplimiento_bajo{
-background:#ff4d4d;
-color:white;
-font-weight:bold;
+    background:#ff4d4d;
+    color:white;
+    font-weight:bold;
 }
 
 .cumplimiento_medio{
-background:#ffd633;
-font-weight:bold;
+    background:#ffd633;
+    font-weight:bold;
 }
 
 .cumplimiento_alto{
-background:#28a745;
-color:white;
-font-weight:bold;
+    background:#28a745;
+    color:white;
+    font-weight:bold;
 }
 
-/* ================= SCROLL TABLA ================= */
+/* ================= TOTALES ================= */
+
+.total-zona{
+    background:#E2DDB4 !important;
+    color:#222 !important;
+    font-weight:bold;
+}
+
+.total-zona td{
+    /* border-top:2px solid #E43636; */
+}
+
+/* ================= SCROLL ================= */
 
 .tablaDistritos::-webkit-scrollbar{
-height:8px;
+    height:8px;
+    width:8px;
 }
 
 .tablaDistritos::-webkit-scrollbar-thumb{
-background:#E43636;
-border-radius:10px;
+    background:#E43636;
+    border-radius:10px;
 }
+
+/* ================= TEXTO ================= */
+
 .negrilla{
-  font-weight: bold;
+    font-weight:bold;
 }
-@media (max-width: 768px){
+
+/* ================= CABECERA FIJA ================= */
+
+#tablaZonas thead th,
+#tablaAgentes thead th{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:#E43636;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:768px){
 
     .main_container{
-        flex-direction: column; /* 🔥 apila todo */
+        flex-direction:column;
     }
 
     .sidebar_filtros{
-        width: 100%; /* 🔥 ocupa todo arriba */
+        width:100%;
     }
 
     .dashboard_content{
-        width: 100%;
+        width:100%;
     }
 
-}
-@media (max-width: 768px){
-
     .content_primer_pagina{
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
     }
 
     .titulo_primer_pagina{
-        padding:10px 40px; /* 🔥 menos ancho */
+        padding:10px 40px;
         font-size:16px;
     }
 
@@ -555,12 +600,17 @@ border-radius:10px;
         font-size:10px;
     }
 
-}
-@media (max-width: 768px){
+    .fila-graficas{
+        flex-direction:column;
+    }
+
+    .grafica-box{
+        width:100%;
+    }
 
     #tablaZonas,
     #tablaAgentes{
-        font-size:6px; /* 🔥 más compacto */
+        font-size:6px;
     }
 
     #tablaZonas th,
@@ -573,30 +623,4 @@ border-radius:10px;
     #tablaAgentes td{
         padding:5px;
     }
-
-}
-
-.total-zona{
-    background:#222 !important;
-    color:#fff;
-    font-weight:bold;
-}
-
-.total-zona td{
-    border-top:2px solid #fff;
-}
-
-.total-zona{
-    background:#000;
-    color:#fff;
-    font-weight:bold;
-}
-
-/* 🔥 Hacer encabezado fijo */
-#tablaZonas thead th,
-#tablaAgentes thead th{
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: #E43636; /* importante para que no se transparente */
 }
